@@ -8,9 +8,19 @@ const main = async () => {
   console.log("Contract deployed by:", owner.address);
 
   await waveContract.getTotalWaves();
+  await waveContract.getTotalMoney();
 
-  const waveTxn = await waveContract.wave();
-  await waveTxn.wait();
+  const firstWaveTxn = await waveContract.wave();
+  const firstHi = await waveContract.sayHi();
+
+  await firstWaveTxn.wait();
+  await firstHi.wait();
+
+  await waveContract.getTotalWaves();
+  await waveContract.getTotalMoney();
+
+  const secondWaveTxn = await waveContract.connect(randomPerson).wave();
+  await secondWaveTxn.wait();
 
   await waveContract.getTotalWaves();
 };
